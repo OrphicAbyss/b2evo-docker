@@ -12,6 +12,7 @@ RUN docker-php-ext-install mysqli
 # install opcache
 RUN docker-php-ext-install opcache
 # install graphics extentions
+RUN apt-get update && apt-get install -y libgd3 libgd-dev
 RUN docker-php-ext-install gd
 # add opcache ini file
 COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
