@@ -12,8 +12,20 @@ RUN docker-php-ext-install mysqli
 # install opcache
 RUN docker-php-ext-install opcache
 # install graphics extentions
-RUN apt-get update && apt-get install -y libgd3 libgd-dev
-RUN docker-php-ext-install gd
+RUN apt-get update \
+    && apt-get install -y \
+        libfreetype6-dev \
+        libpng-dev \
+        libjpeg-dev \
+        libwebp-dev \
+    && docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-webp=/usr/include/ --with-freetype=/usr/include/ \
+    && docker-php-ext-install -j$(nproc) \
+        gd \
+    && apt-get purge -y \
+        libfreetype6-dev \
+        libpng-dev \
+        libjpeg-dev \
+        libwebp-dev
 # add opcache ini file
 COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
