@@ -11,7 +11,8 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS="1" \
 RUN docker-php-ext-install mysqli
 # install opcache
 RUN docker-php-ext-install opcache
-
+# install graphics extentions
+RUN docker-php-ext-install gd
 # add opcache ini file
 COPY opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
